@@ -6,10 +6,16 @@
     "types:generate": "wrangler types"
   },
   "dependencies": {
-    "hono": "^4.7.9"
+    "@hono/zod-validator": "^0.5.0",
+    "@prisma/adapter-d1": "^6.8.2",
+    "@prisma/client": "^6.8.2",
+    "bcryptjs": "^3.0.2",
+    "hono": "^4.7.9",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@types/node": "^22.15.18",
+    "prisma": "^6.8.2",
     "tsx": "^4.19.4",
     "wrangler": "^4.4.0"
   }

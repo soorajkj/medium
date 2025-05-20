@@ -1,8 +1,12 @@
+import { PrismaClient } from "@prisma/client";
+import { JwtVariables } from "hono/jwt";
+
 export interface Env {
   Bindings: {
-    DATABASE_URL: string;
+    DB: D1Database;
+    JWT_SECRET: string;
   };
   Variables: {
-    prisma: typeof prisma;
-  };
+    db: PrismaClient;
+  } & JwtVariables;
 }
