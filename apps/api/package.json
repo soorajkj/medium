@@ -3,7 +3,14 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
-    "types:generate": "wrangler types"
+    "types:generate": "wrangler types",
+    "build": "tsc"
+  },
+  "exports": {
+    "./hc": {
+      "types": "./dist/lib/hc.d.ts",
+      "import": "./dist/lib/hc.js"
+    }
   },
   "dependencies": {
     "@hono/zod-validator": "^0.5.0",
@@ -17,6 +24,7 @@
     "@types/node": "^22.15.18",
     "prisma": "^6.8.2",
     "tsx": "^4.19.4",
-    "wrangler": "^4.4.0"
+    "typescript": "~5.8.3",
+    "wrangler": "^4.16.0"
   }
 }

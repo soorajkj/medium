@@ -1,16 +1,23 @@
 import { zValidator } from "@hono/zod-validator";
-import { factory } from "../factory";
+import { factory } from "../lib/factory";
 import bcrypt from "bcryptjs";
 import { sign } from "hono/jwt";
 import { JWTPayload } from "hono/utils/jwt/types";
 import { setCookie } from "hono/cookie";
 import { signinSchema, signupSchema } from "../schema/auth";
 
+const signupValidator = zValidator("json", signupSchema, (result, c) => {
+  if (!result.success) {
+    const errors = result.error.issues.map(issue => issue.message);
+    return c.json({ errors: errors }, 400);
+  }
+});
+
 export const auth = factory
   .createApp()
-  .post("/signup", zValidator("json", signupSchema), async c => {
-    const { email, password, name } = c.req.valid("json");
+  .post("/signup", signupValidator, async c => {
     const db = c.get("db");
+    const { email, name, password } = c.req.valid("json");
     try {
       const hashed = await bcrypt.hash(password, 12);
       const userExist = await db.user.findFirst({ where: { email } });

@@ -8,5 +8,4 @@ const prisma = {
     return prisma;
   },
 };
-
 export default prisma;

@@ -1,8 +1,8 @@
 import { createFactory } from "hono/factory";
-import { Env } from "./types/env";
-import prisma from "./lib/prisma";
+import prisma from "./prisma";
+import { AppBindings } from "../types/env";
 
-export const factory = createFactory<Env>({
+export const factory = createFactory<AppBindings>({
   defaultAppOptions: { strict: false },
   initApp: app => {
     app.use(async (c, next) => {
