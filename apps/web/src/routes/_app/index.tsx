@@ -9,7 +9,7 @@ export const Route = createFileRoute("/_app/")({
 
 function RouteComponent() {
   return (
-    <div className="flex max-w-screen-xl gap-6 mx-auto h-full w-full py-12">
+    <div className="flex max-w-screen-xl gap-6 mx-auto h-full w-full py-12 px-4">
       <div className="w-full flex-1">
         <Blogs />
       </div>

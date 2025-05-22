@@ -1,14 +1,15 @@
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
 import { z } from "zod";
-import Input from "./core/input";
-import Button from "./core/button";
 import { useMutation } from "@tanstack/react-query";
 import { rpc } from "../libs/rpc";
+import { Button, Input } from "@medium/design/components";
 
 const signupSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().min(2),
-  password: z.string().min(4),
+  email: z.string().email("Must be a valid email"),
+  password: z.string().min(8, "Minimun 8 character"),
+  name: z
+    .string({ required_error: "Name is required" })
+    .min(2, "Minimun 2 characters"),
 });
 
 type SignupSchema = z.infer<typeof signupSchema>;
@@ -37,16 +38,23 @@ export default function SignupForm() {
       onChange: signupSchema,
     },
     onSubmit: async ({ value }) => {
-      mutate(value);
+      mutateAsync(value)
+        .then(() => {})
+        .catch(err => console.log(err));
     },
   });
 
-  const { mutate, isPending } = useMutation({
+  const { mutateAsync, isPending } = useMutation({
+    retry: false,
     mutationFn: async ({ email, name, password }: SignupSchema) => {
-      await rpc.api.auth.signup.$post({
+      const res = await rpc.api.auth.signup.$post({
         json: { email, name, password },
       });
-      form.reset();
+      const data = await res.json();
+      return data;
+    },
+    onError: error => {
+      console.log(error.message);
     },
   });
 
@@ -100,6 +108,8 @@ export default function SignupForm() {
             <div className="flex flex-col gap-1">
               <label htmlFor={field.name}>Password</label>
               <Input
+                type="password"
+                autoComplete="off"
                 id={field.name}
                 name={field.name}
                 value={field.state.value}

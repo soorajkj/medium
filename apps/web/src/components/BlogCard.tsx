@@ -1,6 +1,6 @@
-import { Link } from '@tanstack/react-router';
-import { type Blog } from './Blogs';
-import Icon from './Icon';
+import { Link } from "@tanstack/react-router";
+import { type Blog } from "./Blogs";
+import { Icon } from "@medium/design/components";
 
 type BlogCardProps = {
   blog: Blog;

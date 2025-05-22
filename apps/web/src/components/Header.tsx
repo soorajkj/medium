@@ -1,5 +1,5 @@
+import { Container } from "@medium/design/components";
 import { Link } from "@tanstack/react-router";
-import Container from "./Container";
 
 export default function Header() {
   return (

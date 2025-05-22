@@ -1,14 +1,12 @@
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { z } from "zod";
-import Input from "./core/input";
-import Button from "./core/button";
 import { useMutation } from "@tanstack/react-query";
 import { rpc } from "../libs/rpc";
-import { toast } from "sonner";
+import { z } from "zod";
+import { Button, Input } from "@medium/design/components";
 
 const signinSchema = z.object({
-  email: z.string().min(2),
-  password: z.string().min(4),
+  email: z.string().min(1, "Email is required"),
+  password: z.string().min(1, "Password is required"),
 });
 
 type SigninSchema = z.infer<typeof signinSchema>;
@@ -42,10 +40,15 @@ export default function SigninForm() {
 
   const { mutate } = useMutation({
     mutationFn: async ({ email, password }: SigninSchema) => {
-      await rpc.api.auth.signin.$post({ json: { email, password } });
-    },
-    onError: error => {
-      toast.error("Error", { description: error.message });
+      try {
+        const response = await rpc.api.auth.signin.$post({
+          json: { email, password },
+        });
+        if (!response.ok) return new Error("Error");
+        return await response.json();
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
