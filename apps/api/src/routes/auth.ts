@@ -8,8 +8,8 @@ import { signinSchema, signupSchema } from "../schema/auth";
 
 const signupValidator = zValidator("json", signupSchema, (result, c) => {
   if (!result.success) {
-    const errors = result.error.issues.map(issue => issue.message);
-    return c.json({ errors: errors }, 400);
+    const errors = result.error.flatten().fieldErrors;
+    return c.json(errors, 400);
   }
 });
 
@@ -20,15 +20,15 @@ export const auth = factory
     const { email, name, password } = c.req.valid("json");
     try {
       const hashed = await bcrypt.hash(password, 12);
-      const userExist = await db.user.findFirst({ where: { email } });
-      if (userExist) return c.json("Email is already in use", 409);
+      const user = await db.user.findFirst({ where: { email } });
+      if (user) return c.json("Email is already in use", 409);
       await db.user.create({
         data: { name, email, password: hashed },
         omit: { password: true },
       });
-      return c.json({ message: "User created Successfully" }, 200);
+      return c.json({ message: "User created Successfully" });
     } catch (error) {
-      return c.json({ message: "Something went wrong", error }, 400);
+      return c.json({ message: "Something went wrong" }, 500);
     }
   })
   .post("/signin", zValidator("json", signinSchema), async c => {
