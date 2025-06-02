@@ -13,7 +13,7 @@ const topics = [
 export default function RecommendedTopics() {
   return (
     <div className="flex flex-col gap-4">
-      <h4 className="font-medium">Recommended topics</h4>
+      <h4 className="font-normal">Recommended topics</h4>
       <div className="flex flex-wrap gap-2">
         {topics.map((_, i) => (
           <div

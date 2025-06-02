@@ -1,28 +1,26 @@
 import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import { rpc } from "../libs/rpc";
 import { Button, Input } from "@medium/design/components";
-
-const signupSchema = z.object({
-  email: z.string().email("Must be a valid email"),
-  password: z.string().min(8, "Minimun 8 character"),
-  name: z
-    .string({ required_error: "Name is required" })
-    .min(2, "Minimun 2 characters"),
-});
-
-type SignupSchema = z.infer<typeof signupSchema>;
+import { type SignupSchema, signupSchema } from "@medium/validators";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
+  const isTouched = field.state.meta.isTouched;
+  const isValid = field.state.meta.isValid;
+  const isValidating = field.state.meta.isValidating;
+
   return (
     <>
-      {field.state.meta.isTouched && !field.state.meta.isValid ? (
-        <p className="text-xs text-red-500">
-          {field.state.meta.errors.map(err => err.message).join(", ")}
-        </p>
+      {isTouched && !isValid ? (
+        <div className="flex flex-col gap-1">
+          {field.state.meta.errors.map((err) => (
+            <p key={err.message} className="text-xs text-red-500 leading-tight">
+              {err.message}
+            </p>
+          ))}
+        </div>
       ) : null}
-      {field.state.meta.isValidating ? "Validating..." : null}
+      {isValidating ? "Validating..." : null}
     </>
   );
 }
@@ -38,9 +36,7 @@ export default function SignupForm() {
       onChange: signupSchema,
     },
     onSubmit: async ({ value }) => {
-      mutateAsync(value)
-        .then(() => {})
-        .catch(err => console.log(err));
+      await mutateAsync(value);
     },
   });
 
@@ -51,16 +47,15 @@ export default function SignupForm() {
         json: { email, name, password },
       });
       const data = await res.json();
+      console.log(data);
+
       return data;
-    },
-    onError: error => {
-      console.log(error.message);
     },
   });
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         e.stopPropagation();
         form.handleSubmit();
@@ -69,15 +64,16 @@ export default function SignupForm() {
     >
       <form.Field
         name="name"
-        children={field => {
+        children={(field) => {
           return (
             <div className="flex flex-col gap-1">
-              <label htmlFor={field.name}>Fullname</label>
+              <label htmlFor={field.name}>Name</label>
               <Input
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
-                onChange={e => field.handleChange(e.target.value)}
+                placeholder="Jane Doe"
+                onChange={(e) => field.handleChange(e.target.value)}
               />
               <FieldInfo field={field} />
             </div>
@@ -86,7 +82,7 @@ export default function SignupForm() {
       />
       <form.Field
         name="email"
-        children={field => {
+        children={(field) => {
           return (
             <div className="flex flex-col gap-1">
               <label htmlFor={field.name}>Email</label>
@@ -94,7 +90,8 @@ export default function SignupForm() {
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
-                onChange={e => field.handleChange(e.target.value)}
+                placeholder="janedoe@example.com"
+                onChange={(e) => field.handleChange(e.target.value)}
               />
               <FieldInfo field={field} />
             </div>
@@ -103,7 +100,7 @@ export default function SignupForm() {
       />
       <form.Field
         name="password"
-        children={field => {
+        children={(field) => {
           return (
             <div className="flex flex-col gap-1">
               <label htmlFor={field.name}>Password</label>
@@ -113,24 +110,29 @@ export default function SignupForm() {
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
-                onChange={e => field.handleChange(e.target.value)}
+                placeholder="********"
+                onChange={(e) => field.handleChange(e.target.value)}
               />
               <FieldInfo field={field} />
             </div>
           );
         }}
       />
-      <form.Subscribe
-        selector={state => [state.canSubmit, state.isSubmitting]}
-        children={([canSubmit, isSubmitting]) => (
-          <Button
-            type="submit"
-            disabled={!canSubmit || isSubmitting || isPending}
-          >
-            Signup
-          </Button>
-        )}
-      ></form.Subscribe>
+      <div className="mt-4 flex w-full">
+        <form.Subscribe
+          selector={(state) => [state.canSubmit, state.isSubmitting]}
+          children={([canSubmit, isSubmitting]) => (
+            <Button
+              type="submit"
+              size="lg"
+              width="full"
+              disabled={!canSubmit || isSubmitting || isPending}
+            >
+              Get started
+            </Button>
+          )}
+        ></form.Subscribe>
+      </div>
     </form>
   );
 }

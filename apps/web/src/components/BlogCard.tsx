@@ -10,8 +10,15 @@ export default function BlogCard(props: BlogCardProps) {
   const { blog } = props;
 
   return (
-    <div className="grid grid-cols-12 py-6">
-      <div className="col-span-9 flex flex-col gap-2 pr-8">
+    <article className="flex flex-row-reverse gap-6 py-6">
+      <div className="flex items-center justify-center overflow-hidden max-w-48 ml-14">
+        <img
+          src="https://miro.medium.com/v2/resize:fit:1400/1*VTCkG4pJFDPmRXXruogs0A.png"
+          alt=""
+          className="w-full"
+        />
+      </div>
+      <div className="flex flex-col gap-2 flex-1">
         <div className="flex items-center gap-1">
           <div className="block size-5 rounded-full overflow-hidden">
             <img
@@ -22,55 +29,43 @@ export default function BlogCard(props: BlogCardProps) {
           <Link
             to="/$user"
             params={{ user: blog.userId.toString() }}
-            className="text-xs font-normal hover:underline cursor-pointer"
+            className="text-xs font-light cursor-pointer hover:underline underline-offset-2"
           >
             Jeremiah Warren
           </Link>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 h-full">
           <Link
             to="/$user/$postSlug"
             params={{ user: blog.userId.toString(), postSlug: blog.slug }}
           >
             <div className="flex flex-col gap-1">
-              <h3 className="font-semibold text-xl leading-tight">
+              <h3 className="font-medium text-2xl leading-tight line-clamp-2">
                 {blog.title}
               </h3>
-              <p className="text-neutral-500 text-base">{blog.body}</p>
+              <p className="text-neutral-500 text-base font-light leading-snug line-clamp-3">
+                {blog.body}
+              </p>
             </div>
           </Link>
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-4 text-xs font-light leading-none">
-              <div className="flex items-center gap-1 text-neutral-500">
-                <Icon name="Calendar" className="size-4"></Icon>
-                <span>Mar 11</span>
+          <div className="flex items-center gap-4 mt-auto pb-1">
+            <div className="flex items-center w-full gap-4 text-xs font-light leading-none text-neutral-500">
+              <div className="flex items-center gap-1">
+                <Icon name="Clock" className="size-4"></Icon>
+                <span>5 mins read</span>
               </div>
-              <div className="flex items-center gap-1 text-neutral-500">
-                <Icon name="Heart" className="size-4"></Icon>
-                <span>9.3K</span>
+              <div className="flex items-center gap-1">
+                <Icon name="ThumbsUp" className="size-4"></Icon>
+                <span>9.3K likes</span>
               </div>
-              <div className="flex items-center gap-1 text-neutral-500">
-                <Icon name="MessageSquareText" className="size-4"></Icon>
-                <span>9.3K</span>
+              <div className="flex items-center gap-1">
+                <Icon name="MessageCircle" className="size-4"></Icon>
+                <span>9.3K comments</span>
               </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="bg-neutral-100 size-8 flex items-center justify-center rounded-full">
-                <Icon name="Bookmark" className="size-4"></Icon>
-              </button>
-              <button className="bg-neutral-100 size-8 flex items-center justify-center rounded-full">
-                <Icon name="Ellipsis" className="size-4"></Icon>
-              </button>
             </div>
           </div>
         </div>
       </div>
-      <div className="col-span-3">
-        <img
-          src="https://miro.medium.com/v2/resize:fill:320:214/1*5bEcogL476RNW032ke4mrw.png"
-          alt=""
-        />
-      </div>
-    </div>
+    </article>
   );
 }

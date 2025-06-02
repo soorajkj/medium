@@ -1,13 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
-import BlogRead from '../../components/BlogRead';
+import { createFileRoute } from "@tanstack/react-router";
+import BlogRead from "../../components/BlogRead";
 
-export const Route = createFileRoute('/_app/$user/$postSlug')({
+export const Route = createFileRoute("/_app/$user/$postSlug")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
-    <div>
+    <div
+      className="flex w-full mx-auto divide-x divide-neutral-100"
+      style={{ maxWidth: "1336px" }}
+    >
       <BlogRead />
     </div>
   );

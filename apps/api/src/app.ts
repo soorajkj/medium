@@ -13,7 +13,6 @@ const app = factory
   .use(csrfMiddleware)
   .route("/auth", auth)
   .route("/story", story)
-  .notFound(c => c.json({ message: "Not Found" }, 404))
-  .onError((err, c) => c.json({ message: "Error", err: err.stack }, 500));
+  .notFound((c) => c.json({ message: "Not Found" }, 404));
 
 export default app;

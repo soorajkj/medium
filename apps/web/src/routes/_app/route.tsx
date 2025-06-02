@@ -1,15 +1,15 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
-import Header from '../../components/Header';
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import Header from "../../components/Header";
 
-export const Route = createFileRoute('/_app')({
+export const Route = createFileRoute("/_app")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
   return (
-    <div className="flex flex-col min-h-screen h-full w-full">
+    <div className="h-screen min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1">
+      <main className="overflow-y-auto">
         <Outlet />
       </main>
     </div>

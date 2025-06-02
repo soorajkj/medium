@@ -1,0 +1,9 @@
+{
+  "name": "@medium/validators",
+  "type": "module",
+  "private": true,
+  "main": "./src/index.ts",
+  "dependencies": {
+    "zod": "^3.24.4"
+  }
+}

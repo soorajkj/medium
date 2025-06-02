@@ -9,15 +9,8 @@ export type IconProps = LucideProps & {
 };
 
 export function Icon(props: IconProps) {
-  const { name, strokeWidth = 1, ...rest } = props;
+  const { name, ...rest } = props;
   const LucideIcon = icons[name];
 
-  return (
-    <LucideIcon
-      aria-hidden={true}
-      focusable={false}
-      strokeWidth={strokeWidth}
-      {...rest}
-    />
-  );
+  return <LucideIcon aria-hidden={true} focusable={false} {...rest} />;
 }

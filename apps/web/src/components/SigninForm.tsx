@@ -16,7 +16,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
     <>
       {field.state.meta.isTouched && !field.state.meta.isValid ? (
         <p className="text-xs text-red-500">
-          {field.state.meta.errors.map(err => err.message).join(", ")}
+          {field.state.meta.errors.map((err) => err.message).join(", ")}
         </p>
       ) : null}
       {field.state.meta.isValidating ? "Validating..." : null}
@@ -54,7 +54,7 @@ export default function SigninForm() {
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
       }}
@@ -62,7 +62,7 @@ export default function SigninForm() {
     >
       <form.Field
         name="email"
-        children={field => {
+        children={(field) => {
           return (
             <div className="flex flex-col gap-1">
               <label htmlFor={field.name}>Email</label>
@@ -70,7 +70,7 @@ export default function SigninForm() {
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
-                onChange={e => field.handleChange(e.target.value)}
+                onChange={(e) => field.handleChange(e.target.value)}
               />
               <FieldInfo field={field} />
             </div>
@@ -79,7 +79,7 @@ export default function SigninForm() {
       />
       <form.Field
         name="password"
-        children={field => {
+        children={(field) => {
           return (
             <div className="flex flex-col gap-1">
               <label htmlFor={field.name}>Password</label>
@@ -87,21 +87,28 @@ export default function SigninForm() {
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
-                onChange={e => field.handleChange(e.target.value)}
+                onChange={(e) => field.handleChange(e.target.value)}
               />
               <FieldInfo field={field} />
             </div>
           );
         }}
       />
-      <form.Subscribe
-        selector={state => [state.canSubmit, state.isSubmitting]}
-        children={([canSubmit, isSubmitting]) => (
-          <Button type="submit" disabled={!canSubmit || isSubmitting}>
-            Signin
-          </Button>
-        )}
-      ></form.Subscribe>
+      <div className="mt-4 flex w-full">
+        <form.Subscribe
+          selector={(state) => [state.canSubmit, state.isSubmitting]}
+          children={([canSubmit, isSubmitting]) => (
+            <Button
+              type="submit"
+              disabled={!canSubmit || isSubmitting}
+              size="lg"
+              width="full"
+            >
+              Signin
+            </Button>
+          )}
+        ></form.Subscribe>
+      </div>
     </form>
   );
 }

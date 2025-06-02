@@ -1,40 +1,32 @@
-import { Container } from "@medium/design/components";
+import { Avatar, Button, Container, Input } from "@medium/design/components";
 import { Link } from "@tanstack/react-router";
 
 export default function Header() {
   return (
-    <header className="h-auto sticky top-0 z-40 w-full bg-white shadow-sm">
+    <header className="w-full bg-white shadow-2xs">
       <Container>
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center justify-center">
-            <Link to="/" className="flex items-center gap-2">
-              <p className="text-3xl font-bold font-dmserif">Medium</p>
-              <div className="flex flex-col leading-none text-sm font-medium">
-                <p>Written by</p>
-                <p>Developer</p>
-              </div>
+        <div className="flex items-center gap-4 h-16">
+          <div className="flex items-center">
+            <Link
+              to="/"
+              className="flex items-center gap-2 justify-center bg-neutral-100 rounded-2xl"
+            >
+              <img src="/medium.svg" className="h-6" />
             </Link>
           </div>
-          <nav className="relative overflow-hidden">
-            <ul className="flex items-center gap-2">
-              <li>
-                <Link
-                  to="/signin"
-                  className="inline-flex py-2 text-sm px-4 text-neutral-900 rounded-full"
-                >
-                  Sign In
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/signup"
-                  className="bg-neutral-900 px-4 text-sm py-2 text-white inline-flex rounded-full"
-                >
-                  Create an account
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          <div className="flex flex-1 items-center">
+            <div className="max-w-80 w-full">
+              <Input placeholder="Search topics" />
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <Button iconOnly variant="transparent" size="lg">
+              <Avatar.AvatarRoot size="sm">
+                <Avatar.AvatarImage src="https://i.pinimg.com/75x75_RS/b8/11/e0/b811e076d93b61b61aa5a47c5d5c696c.jpg" />
+                <Avatar.AvatarFallback>S</Avatar.AvatarFallback>
+              </Avatar.AvatarRoot>
+            </Button>
+          </div>
         </div>
       </Container>
     </header>

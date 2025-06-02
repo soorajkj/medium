@@ -23,7 +23,7 @@ export default function Blogs() {
   if (isPending) return "Loading....";
 
   return (
-    <div className="grid grid-cols-1 max-w-screen-md mx-auto divide-y divide-neutral-100">
+    <div className="grid grid-cols-1 w-full max-w-3xl gap-px divide-y divide-neutral-100">
       {stories?.map((blog: Blog) => <BlogCard key={blog.id} blog={blog} />)}
     </div>
   );
