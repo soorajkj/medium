@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 export default function Header() {
   return (
-    <header className="w-full bg-white shadow-2xs">
+    <header className="w-full shadow-2xs bg-white">
       <Container>
         <div className="flex items-center gap-4 h-16">
           <div className="flex items-center">
@@ -11,7 +11,7 @@ export default function Header() {
               to="/"
               className="flex items-center gap-2 justify-center bg-neutral-100 rounded-2xl"
             >
-              <img src="/medium.svg" className="h-6" />
+              <img src="/medium.svg" className="h-11" />
             </Link>
           </div>
           <div className="flex flex-1 items-center">

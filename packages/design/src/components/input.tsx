@@ -13,6 +13,6 @@ export function Input(props: InputProps) {
 
 export const inputStyle = tv({
   base: [
-    "border w-full rounded-full placeholder:text-neutral-500 px-4 py-2 h-11 border-neutral-100 text-neutral-950 text-sm font-normal  leading-none bg-neutral-100",
+    "border w-full placeholder:text-neutral-400 px-4 py-2 h-11 text-neutral-950 text-base font-normal leading-none outline-none bg-neutral-100 border-neutral-100",
   ],
 });

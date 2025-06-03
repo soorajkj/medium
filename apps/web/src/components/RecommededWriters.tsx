@@ -21,7 +21,7 @@ export default function RecommendedWriters() {
               </p>
             </div>
             <div className="min-w-24 flex items-center justify-end">
-              <Button variant="gray" size="sm">
+              <Button variant="transparent" size="sm">
                 Follow
               </Button>
             </div>

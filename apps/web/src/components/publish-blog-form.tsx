@@ -1,8 +1,6 @@
-import { useForm, type AnyFieldApi } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
-import { rpc } from "../libs/rpc";
 import { Button, Input } from "@medium/design/components";
-import { type SignupSchema, signupSchema } from "@medium/validators";
+import { signupSchema, type SignupSchema } from "@medium/validators";
+import { useForm, type AnyFieldApi } from "@tanstack/react-form";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   const isTouched = field.state.meta.isTouched;
@@ -25,7 +23,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
   );
 }
 
-export default function SignupForm() {
+export default function PublishBlogForm() {
   const form = useForm({
     defaultValues: {
       name: "",
@@ -35,20 +33,7 @@ export default function SignupForm() {
     validators: {
       onChange: signupSchema,
     },
-    onSubmit: async ({ value }) => {
-      await mutateAsync(value);
-    },
-  });
-
-  const { mutateAsync, isPending } = useMutation({
-    retry: false,
-    mutationFn: async ({ email, name, password }: SignupSchema) => {
-      const res = await rpc.api.auth.signup.$post({
-        json: { email, name, password },
-      });
-      const data = await res.json();
-      return data;
-    },
+    onSubmit: async () => {},
   });
 
   return (
@@ -65,14 +50,12 @@ export default function SignupForm() {
         children={(field) => {
           return (
             <div className="flex flex-col gap-1">
-              <label htmlFor={field.name} className="text-sm">
-                Full Name
-              </label>
+              <label htmlFor={field.name}>Title</label>
               <Input
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
-                placeholder="Jane Doe"
+                placeholder="Write a preview title"
                 onChange={(e) => field.handleChange(e.target.value)}
               />
               <FieldInfo field={field} />
@@ -85,14 +68,12 @@ export default function SignupForm() {
         children={(field) => {
           return (
             <div className="flex flex-col gap-1">
-              <label htmlFor={field.name} className="text-sm">
-                Email
-              </label>
+              <label htmlFor={field.name}>Description</label>
               <Input
                 id={field.name}
                 name={field.name}
                 value={field.state.value}
-                placeholder="janedoe@example.com"
+                placeholder="Write a preview description"
                 onChange={(e) => field.handleChange(e.target.value)}
               />
               <FieldInfo field={field} />
@@ -100,40 +81,26 @@ export default function SignupForm() {
           );
         }}
       />
-      <form.Field
-        name="password"
-        children={(field) => {
-          return (
-            <div className="flex flex-col gap-1">
-              <label htmlFor={field.name} className="text-sm">
-                Password
-              </label>
-              <Input
-                type="password"
-                autoComplete="off"
-                id={field.name}
-                name={field.name}
-                value={field.state.value}
-                placeholder="********"
-                onChange={(e) => field.handleChange(e.target.value)}
-              />
-              <FieldInfo field={field} />
-            </div>
-          );
-        }}
-      />
+      <div className="relative">
+        <p className="text-sm text-neutral-500">
+          <strong>Note:</strong> Changes here will affect how your story appears
+          in public places like Medium’s homepage and in subscribers’ inboxes —
+          not the contents of the story itself.
+        </p>
+      </div>
+
       <div className="mt-4 flex w-full">
         <form.Subscribe
           selector={(state) => [state.canSubmit, state.isSubmitting]}
           children={([canSubmit, isSubmitting]) => (
             <Button
-              variant="dark"
               type="submit"
-              size="lg"
+              variant="green"
+              size="md"
               width="full"
-              disabled={!canSubmit || isSubmitting || isPending}
+              disabled={!canSubmit || isSubmitting}
             >
-              Get started
+              Publish
             </Button>
           )}
         ></form.Subscribe>

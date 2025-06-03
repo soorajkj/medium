@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Editor from "../../components/editor/index";
+import BlogEditor from "../../components/blog-editor";
 
 export const Route = createFileRoute("/_app/create-story")({
   component: RouteComponent,
@@ -11,7 +11,7 @@ function RouteComponent() {
       className="flex w-full mx-auto divide-x divide-neutral-100"
       style={{ maxWidth: "1336px" }}
     >
-      <Editor />
+      <BlogEditor />
     </div>
   );
 }

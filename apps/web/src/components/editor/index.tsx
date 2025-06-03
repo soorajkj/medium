@@ -1,9 +1,22 @@
 import Placeholder from "@tiptap/extension-placeholder";
-import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
+import {
+  EditorContent,
+  EditorContext,
+  ReactNodeViewRenderer,
+  useEditor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TiptapLink from "@tiptap/extension-link";
-import EditorToolbar from "./toolbar";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Image from "@tiptap/extension-image";
+
+import { all, createLowlight } from "lowlight";
 import Bold from "./extensions/bold";
+import CodeBlock from "./components/code-block";
+import FloatingMenu from "./floating-menu";
+import BubbleMenu from "./bubble-menu";
+
+const lowlight = createLowlight(all);
 
 export default function Editor() {
   const editor = useEditor({
@@ -12,8 +25,9 @@ export default function Editor() {
     editorProps: {},
     editable: true,
     extensions: [
-      StarterKit.configure({ bold: false }),
+      StarterKit.configure({ bold: false, codeBlock: false }),
       Bold,
+      Image,
       TiptapLink.configure({
         linkOnPaste: true,
         openOnClick: false,
@@ -25,13 +39,25 @@ export default function Editor() {
         placeholder: "Write your story....",
         emptyNodeClass: "md-editor__placeholder",
       }),
+      CodeBlockLowlight.extend({
+        addNodeView() {
+          return ReactNodeViewRenderer(CodeBlock);
+        },
+      }).configure({
+        lowlight,
+      }),
     ],
+    onCreate: () => {
+      if (!editor) return;
+      editor.commands.setHeading({ level: 1 });
+    },
   });
 
   return (
-    <div className="flex flex-col my-4 gap-4 w-full max-w-3xl mx-auto">
+    <div className="flex flex-col gap-4 w-full max-w-3xl mx-auto">
       <EditorContext.Provider value={{ editor }}>
-        <EditorToolbar />
+        <BubbleMenu />
+        <FloatingMenu />
         <EditorContent
           editor={editor}
           role="presentation"
