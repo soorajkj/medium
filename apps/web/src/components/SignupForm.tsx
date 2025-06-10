@@ -71,6 +71,7 @@ export default function SignupForm() {
               <Input
                 id={field.name}
                 name={field.name}
+                autoComplete="off"
                 value={field.state.value}
                 placeholder="Jane Doe"
                 onChange={(e) => field.handleChange(e.target.value)}
@@ -91,6 +92,7 @@ export default function SignupForm() {
               <Input
                 id={field.name}
                 name={field.name}
+                autoComplete="off"
                 value={field.state.value}
                 placeholder="janedoe@example.com"
                 onChange={(e) => field.handleChange(e.target.value)}

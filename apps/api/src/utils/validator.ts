@@ -1,6 +1,7 @@
 import { ValidationTargets } from "hono";
 import { ZodSchema } from "zod";
 import { zValidator as zv } from "@hono/zod-validator";
+import { AppError } from "./error";
 
 export const zValidator = <
   T extends ZodSchema,
@@ -13,6 +14,6 @@ export const zValidator = <
     if (!result.success) {
       const message = result.error.name;
       const cause = result.error.issues.map((issue) => issue.message);
-      return c.json({ message, cause }, 400);
+      throw new AppError(400, { message, cause });
     }
   });

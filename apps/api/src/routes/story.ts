@@ -1,4 +1,5 @@
 import { factory } from "../lib/factory";
+import { authMiddleware } from "../middlewares/auth";
 
 const blogs = [
   {
@@ -145,7 +146,7 @@ const blogs = [
 
 export const story = factory
   .createApp()
-  .get("/", async (c) => {
+  .get("/", authMiddleware, async (c) => {
     return c.json(blogs, 200);
   })
   .get("/:userid/:slug", async (c) => {

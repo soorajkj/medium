@@ -1,8 +1,13 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import Header from "../../components/Header";
 
 export const Route = createFileRoute("/_app")({
   component: RouteComponent,
+  beforeLoad: ({ context }) => {
+    if (!context.auth.user) {
+      throw redirect({ to: "/signin" });
+    }
+  },
 });
 
 function RouteComponent() {

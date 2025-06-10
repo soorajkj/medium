@@ -34,21 +34,17 @@ export default function SigninForm() {
       onChange: signinSchema,
     },
     onSubmit: async ({ value }) => {
-      mutate(value);
+      await mutateAsync(value);
     },
   });
 
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: async ({ email, password }: SigninSchema) => {
-      try {
-        const response = await rpc.api.auth.signin.$post({
-          json: { email, password },
-        });
-        if (!response.ok) return new Error("Error");
-        return await response.json();
-      } catch (error) {
-        console.log(error);
-      }
+      const response = await rpc.api.auth.signin.$post({
+        json: { email, password },
+      });
+      if (!response.ok) throw new Error("Something went wrong");
+      return await response.json();
     },
   });
 
@@ -65,10 +61,13 @@ export default function SigninForm() {
         children={(field) => {
           return (
             <div className="flex flex-col gap-1">
-              <label htmlFor={field.name}>Email</label>
+              <label htmlFor={field.name} className="text-sm">
+                Email
+              </label>
               <Input
                 id={field.name}
                 name={field.name}
+                autoComplete="off"
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
@@ -82,10 +81,14 @@ export default function SigninForm() {
         children={(field) => {
           return (
             <div className="flex flex-col gap-1">
-              <label htmlFor={field.name}>Password</label>
+              <label htmlFor={field.name} className="text-sm">
+                Password
+              </label>
               <Input
                 id={field.name}
+                type="password"
                 name={field.name}
+                autoComplete="off"
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
               />
@@ -100,6 +103,7 @@ export default function SigninForm() {
           children={([canSubmit, isSubmitting]) => (
             <Button
               type="submit"
+              variant="dark"
               disabled={!canSubmit || isSubmitting}
               size="lg"
               width="full"

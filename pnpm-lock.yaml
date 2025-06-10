@@ -16,7 +16,7 @@ importers:
     dependencies:
       '@hono/zod-validator':
         specifier: ^0.5.0
-        version: 0.5.0(hono@4.7.9)(zod@3.24.4)
+        version: 0.5.0(hono@4.7.11)(zod@3.24.4)
       '@medium/validators':
         specifier: workspace:^
         version: link:../../packages/validators
@@ -30,8 +30,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       hono:
-        specifier: ^4.7.9
-        version: 4.7.9
+        specifier: ^4.7.11
+        version: 4.7.11
       zod:
         specifier: ^3.24.4
         version: 3.24.4
@@ -132,6 +132,9 @@ importers:
       zod:
         specifier: ^3.24.4
         version: 3.24.4
+      zustand:
+        specifier: ^5.0.5
+        version: 5.0.5(@types/react@19.1.4)(react@19.1.0)
     devDependencies:
       '@eslint/js':
         specifier: ^9.25.0
@@ -833,13 +836,13 @@ packages:
     resolution: {integrity: sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==}
     dev: false
 
-  /@hono/zod-validator@0.5.0(hono@4.7.9)(zod@3.24.4):
+  /@hono/zod-validator@0.5.0(hono@4.7.11)(zod@3.24.4):
     resolution: {integrity: sha512-ds5bW6DCgAnNHP33E3ieSbaZFd5dkV52ZjyaXtGoR06APFrCtzAsKZxTHwOrJNBdXsi0e5wNwo5L4nVEVnJUdg==}
     peerDependencies:
       hono: '>=3.9.0'
       zod: ^3.19.1
     dependencies:
-      hono: 4.7.9
+      hono: 4.7.11
       zod: 3.24.4
     dev: false
 
@@ -3534,8 +3537,8 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
-  /hono@4.7.9:
-    resolution: {integrity: sha512-/EsCoR5h7N4yu01TDu9GMCCJa6ZLk5ZJIWFFGNawAXmd1Tp53+Wir4xm0D2X19bbykWUlzQG0+BvPAji6p9E8Q==}
+  /hono@4.7.11:
+    resolution: {integrity: sha512-rv0JMwC0KALbbmwJDEnxvQCeJh+xbS3KEWW5PC9cMJ08Ur9xgatI0HmtgYZfOdOSOeYsp5LO2cOhdI8cLEbDEQ==}
     engines: {node: '>=16.9.0'}
     dev: false
 
@@ -4959,3 +4962,25 @@ packages:
 
   /zod@3.24.4:
     resolution: {integrity: sha512-OdqJE9UDRPwWsrHjLN2F8bPxvwJBK22EHLWtanu0LSYr5YqzsaaW3RMgmjwr8Rypg5k+meEJdSPXJZXE/yqOMg==}
+
+  /zustand@5.0.5(@types/react@19.1.4)(react@19.1.0):
+    resolution: {integrity: sha512-mILtRfKW9xM47hqxGIxCv12gXusoY/xTSHBYApXozR0HmQv299whhBeeAcRy+KrPPybzosvJBCOmVjq6x12fCg==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=18.0.0'
+      immer: '>=9.0.6'
+      react: '>=18.0.0'
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
+    dependencies:
+      '@types/react': 19.1.4
+      react: 19.1.0
+    dev: false

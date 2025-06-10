@@ -53,7 +53,7 @@ export const statusCode: Record<number, string> = {
   511: "NETWORK_AUTHENTICATION_REQUIRED",
 };
 
-export class APIError extends Error {
+export class AppError extends Error {
   readonly name: string;
   readonly success: boolean;
   readonly type: string;
@@ -69,16 +69,11 @@ export class APIError extends Error {
     this.cause = options?.cause;
     this.message = options?.message || "";
 
-    Object.setPrototypeOf(this, APIError.prototype);
+    Object.defineProperty(this, "options", {
+      value: options,
+      enumerable: false,
+      writable: false,
+      configurable: false,
+    });
   }
 }
-
-export type APIErrorShape = {
-  message: string;
-  code?: string;
-  details?: Record<string, any>;
-};
-
-export type APIResponse<T> =
-  | { success: true; data: T }
-  | { success: false; error: APIErrorShape };

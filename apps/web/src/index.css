@@ -1,10 +1,12 @@
-@import url("https://fonts.cdnfonts.com/css/paralucent-heavy");
-
 @import "tailwindcss";
 
 @plugin 'tailwind-scrollbar';
 
 @custom-variant aria-page (&[aria-current="page"]);
+
+@theme {
+  --font-display: "Bricolage Grotesque", sans-serif;
+}
 
 body {
   font-family: var(--font-sans);
@@ -28,7 +30,7 @@ body {
 .md-editor h4,
 .md-editor h5,
 .md-editor h6 {
-  font-family: Paralucent-Bold;
+  font-family: var(--font-display);
   line-height: 1.1;
   margin-top: 2.5rem;
   color: var(--color-neutral-900);
@@ -42,8 +44,8 @@ body {
 }
 
 .md-editor h1 {
-  font-size: var(--text-5xl);
-  font-weight: 500;
+  font-size: var(--text-6xl);
+  font-weight: 800;
 }
 
 .md-editor h2 {

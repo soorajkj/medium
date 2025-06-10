@@ -1,9 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { type Blog } from "./Blogs";
 import { Icon } from "@medium/design/components";
 
 type BlogCardProps = {
-  blog: Blog;
+  blog: {
+    id: number;
+    slug: string;
+    userId: number;
+    title: string;
+    body: string;
+  };
 };
 
 export default function BlogCard(props: BlogCardProps) {
@@ -40,7 +45,7 @@ export default function BlogCard(props: BlogCardProps) {
             params={{ user: blog.userId.toString(), postSlug: blog.slug }}
           >
             <div className="flex flex-col gap-1">
-              <h3 className="font-medium text-2xl leading-tight line-clamp-2">
+              <h3 className="font-display font-semibold text-neutral-950 text-2xl line-clamp-2">
                 {blog.title}
               </h3>
               <p className="text-neutral-500 text-base font-light leading-snug line-clamp-3">

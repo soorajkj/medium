@@ -1,7 +1,18 @@
 import { Avatar, Button, Container, Input } from "@medium/design/components";
+import { useMutation } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { rpc } from "../libs/rpc";
+import { useAuth } from "../store/auth";
 
 export default function Header() {
+  const { mutateAsync } = useMutation({
+    mutationFn: async () => {
+      await rpc.api.auth.signout.$post();
+    },
+  });
+
+  const { user } = useAuth();
+
   return (
     <header className="w-full shadow-2xs bg-white">
       <Container>
@@ -20,7 +31,13 @@ export default function Header() {
             </div>
           </div>
           <div className="flex items-center gap-4">
-            <Button iconOnly variant="transparent" size="lg">
+            <div>{JSON.stringify(user)}</div>
+            <Button
+              iconOnly
+              variant="transparent"
+              size="lg"
+              onClick={() => mutateAsync()}
+            >
               <Avatar.AvatarRoot size="sm">
                 <Avatar.AvatarImage src="https://i.pinimg.com/75x75_RS/b8/11/e0/b811e076d93b61b61aa5a47c5d5c696c.jpg" />
                 <Avatar.AvatarFallback>S</Avatar.AvatarFallback>

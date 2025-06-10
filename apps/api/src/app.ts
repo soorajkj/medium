@@ -4,6 +4,8 @@ import { auth } from "./routes/auth";
 import { corsMiddleware } from "./middlewares/cors";
 import { csrfMiddleware } from "./middlewares/csrf";
 import { story } from "./routes/story";
+import { errorHandler } from "./handlers/error";
+import { notFoundHandler } from "./handlers/404";
 
 const app = factory
   .createApp()
@@ -13,6 +15,7 @@ const app = factory
   .use(csrfMiddleware)
   .route("/auth", auth)
   .route("/story", story)
-  .notFound((c) => c.json({ message: "Not Found" }, 404));
+  .notFound(notFoundHandler)
+  .onError(errorHandler);
 
 export default app;
